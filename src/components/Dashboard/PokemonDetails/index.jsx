@@ -46,8 +46,8 @@ const PokemonDetails = ({ loading, curPokemon }) => {
 						{types &&
 							types.map((type) => (
 								<PokemonType
-									bg={colorTypes[type].bg}
-									textColor={colorTypes[type].textColor}
+									bg={colorTypes[type]?.bg}
+									textColor={colorTypes[type]?.textColor}
 									key={type}
 								>
 									{type}
