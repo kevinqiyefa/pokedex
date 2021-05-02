@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import styled from '@emotion/styled';
+import { Dashboard, Login, ProtectedRoute } from './components';
+
+const AppWrapper = styled.main`
+	text-align: center;
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+	return (
+		<AppWrapper>
+			<Router>
+				<Switch>
+					<ProtectedRoute
+						exact
+						path="/dashboard"
+						component={Dashboard}
+						isAuthenticated={isAuthenticated}
+					/>
+
+					<Route exact path="/login">
+						<Login
+							setIsAuth={setIsAuthenticated}
+							isAuthenticated={isAuthenticated}
+						/>
+					</Route>
+					<Route>
+						<Redirect to="/login" />
+					</Route>
+				</Switch>
+			</Router>
+		</AppWrapper>
+	);
 }
 
 export default App;
